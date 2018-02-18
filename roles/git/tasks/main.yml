@@ -2,7 +2,7 @@
 
 - name: Add git config file
   template:
-    src: gitconfig
+    src: gitconfig.j2
     dest: '{{ ansible_env.HOME }}/.gitconfig'
     owner: '{{ user }}'
     mode: 0700
