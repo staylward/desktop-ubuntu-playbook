@@ -1,0 +1,33 @@
+---
+
+- name: Add git config file
+  template:
+    src: gitconfig
+    dest: '{{ ansible_env.HOME }}/.gitconfig'
+    owner: '{{ user }}'
+    mode: 0700
+
+- name: Create ssh key pair for github
+  user: 
+    name: '{{ user }}'
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_file: '.ssh/github_{{ user }}_id_rsa'
+
+- name: Ensure SSH config exists
+  file: 
+    path: '{{ ansible_env.HOME }}/.ssh/config'
+    state: touch
+    owner: '{{ user }}'
+    mode: 0700
+
+- name: Enable ssh-agent
+  shell: 'eval $(ssh-agent)'
+
+- name: Ensure key is used for github connection
+  blockinfile:
+    dest: '{{ ansible_env.HOME }}/.ssh/config'
+    block: |
+      Host github.com
+        IdentityFile .ssh/github_{{ user }}_id_rsa
+
