@@ -14,3 +14,10 @@
 - name: VIM | Created symlink (.vim/)
   file: src={{ local_home }}/.vim-config/vim dest={{ local_home }}/.vim owner={{ user }} group={{ user }} state=link
 
+- name: VIM | Add vim as default editor in .bashrc
+  blockinfile:
+    dest: '{{ ansible_env.HOME }}/.bashrc'
+    block: |
+      export VISUAL=vim
+      export EDITOR="$VISUAL"
+
