@@ -14,4 +14,5 @@
     - { role: common, become: yes }     # List of essential packages
     - vim                               # Configuration for vim
     - git                               # Setup git for development
+    - gnome                             # Update gnome settings
 

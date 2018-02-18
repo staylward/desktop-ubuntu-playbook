@@ -1,0 +1,19 @@
+---
+
+- name: Ensure gnome config directory
+  file:
+    path: '{{ ansible_env.HOME }}/.gnome_config'
+    state: directory
+    mode: 0755
+    owner: '{{ user }}'
+
+- name: Copy touchpad_settings.sh to gnome config
+  copy:
+    src: touchpad_settings.sh
+    dest: '{{ ansible_env.HOME }}/.gnome_config/touchpad_settings.sh'
+    mode: 0755
+    owner: '{{ user }}'
+
+- name: Update gesettings to include file
+  command: 'gsettings set org.gnome.settings-daemon.peripherals.input-devices hotplug-command "{{ ansible_env.HOME }}/.gnome_config/touchpad_settings.sh"'
+
