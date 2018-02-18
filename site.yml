@@ -1,0 +1,16 @@
+##
+# Ansible playbook for setting up a LAMP development server on Ubuntu 14.04.
+#
+
+---
+
+- hosts: local
+  user: staylward
+
+  vars_files:
+    - group_vars/all.yml
+
+  roles:
+    - { role: common, become: yes }     # List of essential packages
+    - vim                               # Configuration for vim
+
